@@ -19,14 +19,11 @@ public class PlayerMovement : MonoBehaviour
         // Movimiento lateral
         float moveX = Input.GetAxisRaw("Horizontal");
         rb.linearVelocity = new Vector2(moveX * speed, rb.linearVelocity.y);
-
         animatorPlayer.SetFloat("movement", Mathf.Abs(Input.GetAxisRaw("Horizontal")));
         if (Input.GetAxisRaw("Horizontal") != 0)
         {
             transform.localScale = new Vector3(Input.GetAxisRaw("Horizontal"), 1, 1);
         }
-        Debug.Log(isGrounded);
-
         // Salto
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
@@ -39,7 +36,7 @@ public class PlayerMovement : MonoBehaviour
     void OnCollisionEnter2D(Collision2D collision)
     {
         // Si tocamos el suelo, permitimos volver a saltar
-        if (collision.gameObject.name == "Plataforma")
+        if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
         }
