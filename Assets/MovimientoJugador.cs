@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class PlayerMovement : MonoBehaviour
+public class MovimientoJugador : MonoBehaviour
 {
     public float speed = 5f;      // Velocidad de movimiento
     public float jumpForce = 7f;  // Fuerza del salto
