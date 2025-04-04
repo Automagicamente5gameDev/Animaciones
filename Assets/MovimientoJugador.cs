@@ -2,43 +2,58 @@ using UnityEngine;
 
 public class MovimientoJugador : MonoBehaviour
 {
-    public float speed = 5f;      // Velocidad de movimiento
-    public float jumpForce = 7f;  // Fuerza del salto
-    private Rigidbody2D rb;
-    private bool isGrounded;
-    private Animator animatorPlayer;
-
+    Rigidbody2D rb;
+    bool isGrounded;
+    Animator animationPlayer;
+    private bool bajoAtaque = false;
+    private int vidas = 3;
+    [SerializeField] private float fuerzaSalto = 5f;
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        animatorPlayer = GetComponent<Animator>();
+        animationPlayer = GetComponent<Animator>();
     }
 
+    // Update is called once per frame
     void Update()
     {
-        // Movimiento lateral
-        float moveX = Input.GetAxisRaw("Horizontal");
-        rb.linearVelocity = new Vector2(moveX * speed, rb.linearVelocity.y);
-        animatorPlayer.SetFloat("movement", Mathf.Abs(Input.GetAxisRaw("Horizontal")));
-        if (Input.GetAxisRaw("Horizontal") != 0)
+        if (!bajoAtaque)
         {
-            transform.localScale = new Vector3(Input.GetAxisRaw("Horizontal"), 1, 1);
+            if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
+            {
+                rb.linearVelocityY = fuerzaSalto;
+                isGrounded = false;
+            }
+            else if (Input.GetAxis("Horizontal") != 0 && Input.GetAxisRaw("Horizontal") != 0)
+            {
+                rb.linearVelocityX = 5f * Input.GetAxis("Horizontal");
+
+                transform.localScale = new Vector3(Input.GetAxisRaw("Horizontal"), 1, 1);
+            }
         }
-        // Salto
-        if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
-        {
-            rb.linearVelocity = new Vector2(rb.linearVelocity.x, jumpForce);
-            isGrounded = false; // Evita saltos dobles
-        }
-        animatorPlayer.SetBool("isGrounded", isGrounded);
+        animationPlayer.SetFloat("movement", Mathf.Abs(Input.GetAxis("Horizontal")));
+        animationPlayer.SetBool("isGrounded", isGrounded);
     }
 
+    // Detecta si el jugador esta tocando el suelo
     void OnCollisionEnter2D(Collision2D collision)
     {
-        // Si tocamos el suelo, permitimos volver a saltar
-        if (collision.gameObject.CompareTag("Ground"))
+        if (collision.gameObject.CompareTag("Ground")) // Asegarate de que el suelo tenga el tag "Ground"
         {
             isGrounded = true;
+            bajoAtaque = false;
+        }
+    }
+
+    public void serAtacado(Vector2 empuje)
+    {
+        bajoAtaque = true;
+        rb.linearVelocity = empuje;
+        vidas--;
+        if (vidas <= 0)
+        {
+            Destroy(gameObject);
         }
     }
 }
