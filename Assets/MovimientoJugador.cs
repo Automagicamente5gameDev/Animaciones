@@ -8,11 +8,28 @@ public class MovimientoJugador : MonoBehaviour
     private bool bajoAtaque = false;
     private int vidas = 3;
     [SerializeField] private float fuerzaSalto = 5f;
+
+    //SerializedField usado para permitir asignar una barra de vida externa desde el editor de unity
+    [SerializeField] private VidaUIControlador controladorVida = null;
+
+
+    public int getVida()
+    {
+        return vidas;
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animationPlayer = GetComponent<Animator>();
+
+        //si controladorVida no fue asignado en el editor entonces se busca una barra de vida dentro del objeto jugador
+        if (!controladorVida)
+        {
+            //busca el script VidaUIControlador en el objeto actual y los objetos internos del mismo
+            controladorVida = GetComponentInChildren<VidaUIControlador>();
+        }
     }
 
     // Update is called once per frame
@@ -55,5 +72,8 @@ public class MovimientoJugador : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        //acciona el comportamiento actualizar vida del controladorVida
+        controladorVida.ActualizarVida(vidas);
     }
 }
