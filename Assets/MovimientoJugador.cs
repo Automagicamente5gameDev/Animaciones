@@ -49,7 +49,7 @@ public class MovimientoJugador : MonoBehaviour
                 //voltea el objeto jugador entero usando localScale - gira TODO
                 //transform.localScale = new Vector3(Input.GetAxisRaw("Horizontal"), 1, 1);
 
-                GetComponent<SpriteRenderer>().flipX = Input.GetAxisRaw("Horizontal") == -1;
+                GetComponent<SpriteRenderer>().flipX = Input.GetAxisRaw("Horizontal") == 1;
 
 
             }
