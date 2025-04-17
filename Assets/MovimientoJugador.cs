@@ -4,6 +4,7 @@ public class MovimientoJugador : MonoBehaviour
 {
     Rigidbody2D rb;
     bool isGrounded;
+    bool attack;
     Animator animationPlayer;
     private bool bajoAtaque = false;
     private int vidas = 3;
@@ -50,12 +51,21 @@ public class MovimientoJugador : MonoBehaviour
                 //transform.localScale = new Vector3(Input.GetAxisRaw("Horizontal"), 1, 1);
 
                 GetComponent<SpriteRenderer>().flipX = Input.GetAxisRaw("Horizontal") == 1;
+            }
 
-
+            if (Input.GetKeyDown(KeyCode.LeftShift))
+            {
+                attack = true;
             }
         }
         animationPlayer.SetFloat("movement", Mathf.Abs(Input.GetAxis("Horizontal")));
         animationPlayer.SetBool("isGrounded", isGrounded);
+        animationPlayer.SetBool("attack", attack);
+    }
+
+    public void StopAttack()
+    {
+        attack = false;
     }
 
     // Detecta si el jugador esta tocando el suelo

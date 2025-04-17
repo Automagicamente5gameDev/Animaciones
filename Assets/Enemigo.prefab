@@ -235,7 +235,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2be0b0df72d470e448c16be958494e5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  distanciaAtaque: 2
+  distanciaAtaque: 2.22
   fuerzaEmpujeX: 5
   fuerzaEmpujeY: 2.5
   velocidadX: 2

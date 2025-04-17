@@ -62,7 +62,7 @@ public class EnemigoControlador : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Weapon"))
         {
             //destruye el objeto Enemigo que detecta la colision
             Destroy(gameObject);
