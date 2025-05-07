@@ -50,8 +50,12 @@ public class MovimientoJugador : MonoBehaviour
 
                 //voltea el objeto jugador entero usando localScale - gira TODO
                 //transform.localScale = new Vector3(Input.GetAxisRaw("Horizontal"), 1, 1);
-
                 GetComponent<SpriteRenderer>().flipX = Input.GetAxisRaw("Horizontal") == 1;
+            }
+
+            if (Input.GetAxis("Horizontal") == 0 || !isGrounded)
+            {
+                SoundFXController.Instance.JugadorCaminar();
             }
 
             if (Input.GetKeyDown(KeyCode.LeftShift))
@@ -91,10 +95,16 @@ public class MovimientoJugador : MonoBehaviour
         if (vidas <= 0)
         {
             SoundFXController.Instance.JugadorDerrota(transform);
+            SoundFXController.Instance.JugadorCaminar();
             Destroy(gameObject);
         }
 
         //acciona el comportamiento actualizar vida del controladorVida
         controladorVida.ActualizarVida(vidas);
+    }
+
+    public void IniciarSonidoCaminar()
+    {
+        SoundFXController.Instance.JugadorCaminar(transform);
     }
 }

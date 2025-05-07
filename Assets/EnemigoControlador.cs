@@ -24,7 +24,6 @@ public class EnemigoControlador : MonoBehaviour
         //verifica si existe el jugador y esta dentro de la distancia para atacar
         if (jugadorTransform && Vector2.Distance(jugadorTransform.position, transform.position) < distanciaAtaque)
         {
-            Debug.Log("ATACAR");
             //-1,0,1
             direccion = Mathf.Sign(jugadorTransform.position.x - transform.position.x);
             rb.linearVelocity = new Vector2(velocidadX * direccion, rb.linearVelocityY);
