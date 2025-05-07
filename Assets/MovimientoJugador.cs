@@ -42,6 +42,7 @@ public class MovimientoJugador : MonoBehaviour
             {
                 rb.linearVelocityY = fuerzaSalto;
                 isGrounded = false;
+                SoundFXController.Instance.JugadorSalto(transform);
             }
             else if (Input.GetAxis("Horizontal") != 0 && Input.GetAxisRaw("Horizontal") != 0)
             {
@@ -56,6 +57,8 @@ public class MovimientoJugador : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftShift))
             {
                 attack = true;
+                SoundFXController.Instance.JugadorAtaque(transform);
+
             }
         }
         animationPlayer.SetFloat("movement", Mathf.Abs(Input.GetAxis("Horizontal")));
@@ -83,8 +86,11 @@ public class MovimientoJugador : MonoBehaviour
         bajoAtaque = true;
         rb.linearVelocity = empuje;
         vidas--;
+        SoundFXController.Instance.JugadorHerido(transform);
+
         if (vidas <= 0)
         {
+            SoundFXController.Instance.JugadorDerrota(transform);
             Destroy(gameObject);
         }
 

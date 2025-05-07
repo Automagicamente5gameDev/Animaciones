@@ -64,6 +64,7 @@ public class EnemigoControlador : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Weapon"))
         {
+            SoundFXController.Instance.EnemigoDerrota(transform);
             //destruye el objeto Enemigo que detecta la colision
             Destroy(gameObject);
         }
