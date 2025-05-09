@@ -21,7 +21,21 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("Menu", LoadSceneMode.Additive);
+            if (!SceneManager.GetSceneByName("Menu").isLoaded)
+            {
+                Time.timeScale = 0f;//detenga el tiempo del juego
+                SceneManager.LoadScene("Menu", LoadSceneMode.Additive);
+            }
+            else
+            {
+                RegresarJuego();
+            }
         }
+    }
+
+    public void RegresarJuego()
+    {
+        Time.timeScale = 1f;//reanude el tiempo del juego
+        SceneManager.UnloadSceneAsync("Menu");
     }
 }
