@@ -3,6 +3,8 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+
+    private string nombreEscenaActual = "Nivel1";
     public static GameController Instance { get; private set; } = null;
     private void Awake()
     {
@@ -21,7 +23,7 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!SceneManager.GetSceneByName("Menu").isLoaded)
+            if (SceneManager.sceneCount <= 1)
             {
                 Time.timeScale = 0f;//detenga el tiempo del juego
                 SceneManager.LoadScene("Menu", LoadSceneMode.Additive);
@@ -35,7 +37,19 @@ public class GameController : MonoBehaviour
 
     public void RegresarJuego()
     {
+        int cantEscenas = SceneManager.sceneCount;//pido la cantidad de escenas activas (0-N)
+        Scene sceneTemp;
+
+        for (int i = 0; i < cantEscenas; i++)
+        {
+            sceneTemp = SceneManager.GetSceneAt(i);//asignar a sceneTemp una escena activa a la vez
+            if (sceneTemp.name != nombreEscenaActual)
+            {
+                SceneManager.UnloadSceneAsync(sceneTemp);
+                Debug.LogWarning("Eliminando escena: "+ sceneTemp.name);
+            }
+        }
+
         Time.timeScale = 1f;//reanude el tiempo del juego
-        SceneManager.UnloadSceneAsync("Menu");
     }
 }
