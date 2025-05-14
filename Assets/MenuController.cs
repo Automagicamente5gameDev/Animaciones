@@ -37,4 +37,12 @@ public class MenuController : MonoBehaviour
 #endif
         Application.Quit();
     }
+
+    public void ActivarConfigSonido()
+    {
+        //sacamos la escena de menu
+        SceneManager.UnloadSceneAsync("Menu");
+        //activamos la escena de menu sonido
+        SceneManager.LoadScene("MenuSonido", LoadSceneMode.Additive);
+    }
 }
