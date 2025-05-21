@@ -110,6 +110,8 @@ public class MovimientoJugador : MonoBehaviour
 
         //acciona el comportamiento actualizar vida del controladorVida
         controladorVida.ActualizarVida(vidas);
+        animationPlayer.SetTrigger("danio");
+        SoundFXController.Instance.JugadorCaminar();
     }
 
     public void IniciarSonidoCaminar()
@@ -122,7 +124,9 @@ public class MovimientoJugador : MonoBehaviour
         if (collision.CompareTag("LimiteMapa"))
         {
             Derrota();
-        }else if (collision.CompareTag("PuntoGuardado"))
+            controladorVida.ActualizarVida(vidas);
+        }
+        else if (collision.CompareTag("PuntoGuardado"))
         {
             respawnPosition = collision.transform.position;
         }
@@ -131,7 +135,7 @@ public class MovimientoJugador : MonoBehaviour
     private void Derrota()
     {
         SoundFXController.Instance.JugadorDerrota(transform);
-        SoundFXController.Instance.JugadorCaminar();
+        
         //Destroy(gameObject);
         transform.position = respawnPosition;
         rbJugador.linearVelocity = Vector2.zero;
