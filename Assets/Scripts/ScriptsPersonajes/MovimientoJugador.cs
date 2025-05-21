@@ -2,13 +2,16 @@ using UnityEngine;
 
 public class MovimientoJugador : MonoBehaviour
 {
-    Rigidbody2D rb;
+    private const int MAX_VIDAS = 3;
+    Rigidbody2D rbJugador;
     bool isGrounded;
     bool attack;
     Animator animationPlayer;
     private bool bajoAtaque = false;
-    private int vidas = 3;
+    private int vidas = MAX_VIDAS;
     [SerializeField] private float fuerzaSalto = 5f;
+    [SerializeField] private Transform nuevoRespawn = null;
+    private Vector3 respawnPosition;
 
     //SerializedField usado para permitir asignar una barra de vida externa desde el editor de unity
     [SerializeField] private VidaUIControlador controladorVida = null;
@@ -22,7 +25,15 @@ public class MovimientoJugador : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        if (nuevoRespawn == null)
+        {
+            respawnPosition = transform.position;
+        }
+        else
+        {
+            respawnPosition = nuevoRespawn.position;
+        }
+            rbJugador = GetComponent<Rigidbody2D>();
         animationPlayer = GetComponent<Animator>();
 
         //si controladorVida no fue asignado en el editor entonces se busca una barra de vida dentro del objeto jugador
@@ -40,13 +51,13 @@ public class MovimientoJugador : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
             {
-                rb.linearVelocityY = fuerzaSalto;
+                rbJugador.linearVelocityY = fuerzaSalto;
                 isGrounded = false;
                 SoundFXController.Instance.JugadorSalto(transform);
             }
             else if (Input.GetAxis("Horizontal") != 0 && Input.GetAxisRaw("Horizontal") != 0)
             {
-                rb.linearVelocityX = 5f * Input.GetAxis("Horizontal");
+                rbJugador.linearVelocityX = 5f * Input.GetAxis("Horizontal");
 
                 //voltea el objeto jugador entero usando localScale - gira TODO
                 //transform.localScale = new Vector3(Input.GetAxisRaw("Horizontal"), 1, 1);
@@ -88,15 +99,13 @@ public class MovimientoJugador : MonoBehaviour
     public void serAtacado(Vector2 empuje)
     {
         bajoAtaque = true;
-        rb.linearVelocity = empuje;
+        rbJugador.linearVelocity = empuje;
         vidas--;
         SoundFXController.Instance.JugadorHerido(transform);
 
         if (vidas <= 0)
         {
-            SoundFXController.Instance.JugadorDerrota(transform);
-            SoundFXController.Instance.JugadorCaminar();
-            Destroy(gameObject);
+            Derrota();
         }
 
         //acciona el comportamiento actualizar vida del controladorVida
@@ -106,5 +115,26 @@ public class MovimientoJugador : MonoBehaviour
     public void IniciarSonidoCaminar()
     {
         SoundFXController.Instance.JugadorCaminar(transform);
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.CompareTag("LimiteMapa"))
+        {
+            Derrota();
+        }else if (collision.CompareTag("PuntoGuardado"))
+        {
+            respawnPosition = collision.transform.position;
+        }
+    }
+
+    private void Derrota()
+    {
+        SoundFXController.Instance.JugadorDerrota(transform);
+        SoundFXController.Instance.JugadorCaminar();
+        //Destroy(gameObject);
+        transform.position = respawnPosition;
+        rbJugador.linearVelocity = Vector2.zero;
+        vidas = MAX_VIDAS;
     }
 }
