@@ -42,6 +42,7 @@ public class MovimientoJugador : MonoBehaviour
             //busca el script VidaUIControlador en el objeto actual y los objetos internos del mismo
             controladorVida = GetComponentInChildren<VidaUIControlador>();
         }
+        controladorVida.SetVidaTotal(vidas);
     }
 
     // Update is called once per frame

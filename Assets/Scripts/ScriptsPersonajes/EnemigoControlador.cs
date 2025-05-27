@@ -9,6 +9,8 @@ public class EnemigoControlador : MonoBehaviour
     [SerializeField] private float fuerzaEmpujeY = 2.5f;
     [SerializeField] private float velocidadX = 5f;
     private Animator animatorEnemigo;
+    [SerializeField] private VidaUIControlador controladorVida = null;
+    [SerializeField] private int vidas = 1;
 
     void Start()
     {
@@ -16,6 +18,11 @@ public class EnemigoControlador : MonoBehaviour
         animatorEnemigo = GetComponent<Animator>();
         //busca al jugador
         jugadorTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
+        if (controladorVida)
+        {
+            controladorVida.SetVidaTotal(vidas);
+        }
     }
 
     void FixedUpdate()
@@ -63,9 +70,18 @@ public class EnemigoControlador : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("Weapon"))
         {
-            SoundFXController.Instance.EnemigoDerrota(transform);
-            //destruye el objeto Enemigo que detecta la colision
-            Destroy(gameObject);
+            vidas--;
+            if (controladorVida)
+            {
+                controladorVida.ActualizarVida(vidas);
+            }
+            if (vidas <=0)
+            {
+                SoundFXController.Instance.EnemigoDerrota(transform);
+                //destruye el objeto Enemigo que detecta la colision
+                Destroy(gameObject);
+            }
+
         }
     }
 }
