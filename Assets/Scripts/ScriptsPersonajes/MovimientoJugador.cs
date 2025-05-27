@@ -100,6 +100,7 @@ public class MovimientoJugador : MonoBehaviour
     {
         bajoAtaque = true;
         rbJugador.linearVelocity = empuje;
+        isGrounded = false;
         vidas--;
         SoundFXController.Instance.JugadorHerido(transform);
 
@@ -124,6 +125,7 @@ public class MovimientoJugador : MonoBehaviour
         if (collision.CompareTag("LimiteMapa"))
         {
             Derrota();
+            isGrounded = false;
             controladorVida.ActualizarVida(vidas);
         }
         else if (collision.CompareTag("PuntoGuardado"))
