@@ -9,7 +9,8 @@ public class SoundController : MonoBehaviour
         //verifico si el objeto en cuestion SoundController es un duplicado innecesario o no
         if (Instance != null && Instance != this)
         {
-            Destroy(this);
+            Debug.LogWarning("Eliminando duplicado");
+            Destroy(this.gameObject);
         }
         else
         {
