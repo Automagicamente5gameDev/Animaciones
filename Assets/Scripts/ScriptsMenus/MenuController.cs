@@ -21,7 +21,7 @@ public class MenuController : MonoBehaviour
         if (esMenuInicio)
         {
             print("Inciando juego");
-            SceneManager.LoadScene("Nivel1");
+            GameController.Instance.SiguienteNivel();
         }
         else
         {

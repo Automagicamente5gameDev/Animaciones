@@ -80,9 +80,9 @@ public class EnemigoControlador : MonoBehaviour
                 SoundFXController.Instance.EnemigoDerrota(transform);
                 //destruye el objeto Enemigo que detecta la colision
                 Destroy(gameObject);
-                GameController.Instance.JuegoTerminado();
                 if (controladorVida)
                 {
+                    GameController.Instance.JuegoTerminado();
                     Destroy(controladorVida.gameObject);
                 }
             }

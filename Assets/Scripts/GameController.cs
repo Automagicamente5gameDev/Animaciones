@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -6,8 +8,10 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     private const int NIVEL_FINAL = 2;
+    private const int NIVEL_INICIO = 0;
     private const string NOMBRE_NIVEL = "Nivel";
-    private int nivel = 1;
+
+    private int nivel = NIVEL_INICIO;
     private TextMeshProUGUI msjFinal = null;
     public static GameController Instance { get; private set; } = null;
     private void Awake()
@@ -90,7 +94,7 @@ public class GameController : MonoBehaviour
         {
             msjFinal = GameObject.FindGameObjectWithTag("MsjFinal").GetComponent<TextMeshProUGUI>();
             Debug.LogWarning(msjFinal);
-            SceneManager.sceneLoaded -= BuscarMsjFinalAlCargarEscena;
+            //SceneManager.sceneLoaded -= BuscarMsjFinalAlCargarEscena;
         }
     }
 
@@ -98,5 +102,15 @@ public class GameController : MonoBehaviour
     {
         msjFinal.text = "GANASTE!";
         msjFinal.enabled = true;
+
+        StartCoroutine(ReiniciarJuego());
+    }
+
+    private IEnumerator ReiniciarJuego()
+    {
+        yield return new WaitForSeconds(4);
+        nivel = NIVEL_INICIO;
+        //SceneManager.sceneLoaded += BuscarMsjFinalAlCargarEscena;
+        SceneManager.LoadScene("MenuInicio");
     }
 }
