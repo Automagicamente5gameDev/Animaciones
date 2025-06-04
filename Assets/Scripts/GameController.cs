@@ -1,10 +1,14 @@
+using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
+    private const int NIVEL_FINAL = 2;
     private const string NOMBRE_NIVEL = "Nivel";
     private int nivel = 1;
+    private TextMeshProUGUI msjFinal = null;
     public static GameController Instance { get; private set; } = null;
     private void Awake()
     {
@@ -16,6 +20,21 @@ public class GameController : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(this);
+        }
+    }
+
+    private void Start()
+    {
+        SceneManager.sceneLoaded += BuscarMsjFinalAlCargarEscena;
+
+        //evaluar si estoy comenzando en el nivel final
+        string escenaNombre = SceneManager.GetActiveScene().name; // Nivel1 - Nivel2 - NivelN
+        if (escenaNombre != "MenuInicio")
+        {
+            string nivelActual = new string(escenaNombre.Where(char.IsDigit).ToArray());// 1 - 2 - N
+            nivel = int.Parse(nivelActual);
+            Debug.LogWarning("Nivel actual es: " + nivel);
+            BuscarMsjFinal();
         }
     }
 
@@ -57,5 +76,27 @@ public class GameController : MonoBehaviour
     {
         nivel++;
         SceneManager.LoadScene( (NOMBRE_NIVEL + nivel) );
+        
+    }
+
+    public void BuscarMsjFinalAlCargarEscena(Scene scene, LoadSceneMode mode)
+    {
+        BuscarMsjFinal();
+    }
+
+    private void BuscarMsjFinal()
+    {
+        if (nivel == NIVEL_FINAL)
+        {
+            msjFinal = GameObject.FindGameObjectWithTag("MsjFinal").GetComponent<TextMeshProUGUI>();
+            Debug.LogWarning(msjFinal);
+            SceneManager.sceneLoaded -= BuscarMsjFinalAlCargarEscena;
+        }
+    }
+
+    public void JuegoTerminado()
+    {
+        msjFinal.text = "GANASTE!";
+        msjFinal.enabled = true;
     }
 }
