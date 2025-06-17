@@ -330,8 +330,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Game\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 661.3334
-    y: -881.3333
+    x: 662.3333
+    y: 24
     width: 678.00006
     height: 518.6667
   m_SerializedDataModeController:
@@ -403,7 +403,7 @@ MonoBehaviour:
       height: 1252.7302
     m_MinimalGUI: 1
   m_defaultScale: 0.39726564
-  m_LastWindowPixelSize: {x: 1017.0001, y: 778}
+  m_LastWindowPixelSize: {x: 678.00006, y: 518.6667}
   m_ClearInEditMode: 1
   m_NoCameraWarning: 1
   m_LowResolutionForAspectRatios: 01000000000100000100
@@ -432,7 +432,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: -881.3333
+    y: 24
     width: 219
     height: 518.6667
   m_SerializedDataModeController:
@@ -497,8 +497,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Scene\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 220
-    y: -881.3333
+    x: 221
+    y: 24
     width: 439.3333
     height: 518.6667
   m_SerializedDataModeController:
@@ -1276,7 +1276,7 @@ MonoBehaviour:
   m_Pos:
     serializedVersion: 2
     x: 0
-    y: -336.66663
+    y: 568.6667
     width: 1340.3334
     height: 242.66663
   m_SerializedDataModeController:
@@ -1320,7 +1320,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 1.3333435}
     m_SelectedIDs: 76ba0000
     m_LastClickedID: 47734
-    m_ExpandedIDs: 00000000d2b90000d4b90000d6b9000000ca9a3b
+    m_ExpandedIDs: 00000000e4b70000e6b70000e8b70000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1349,7 +1349,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 00000000d2b90000d4b90000d6b9000000ca9a3b
+    m_ExpandedIDs: 00000000e4b70000e6b70000e8b70000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1686,8 +1686,8 @@ MonoBehaviour:
     m_TextWithWhitespace: "Inspector\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 1341.3334
-    y: -881.3333
+    x: 1342.3334
+    y: 24
     width: 364.33325
     height: 787.3333
   m_SerializedDataModeController:
